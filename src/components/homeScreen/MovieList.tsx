@@ -34,7 +34,6 @@ const MovieList: React.FC<MovieListProps> = ({ data, onItemClick }) => {
       data={data}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
-      contentContainerStyle={styles.container}
     />
   );
 };
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: 16,
     padding: 16,
+    marginHorizontal: 16,
     backgroundColor: '#fff',
     borderRadius: 8,
     shadowColor: '#000',
