@@ -26,15 +26,15 @@ export const GET_MOVIE = gql`
   }
 `;
 
-export type GetMovieType = {
-    id: string
-    title: string
-    releaseDate: Date
-    openingCrawl: string
-    speciesConnection: { totalCount: number }
-    planetConnection: { totalCount: number }
-    vehicleConnection: { totalCount: number }
-    characterConnection: {
-      characters: { id: string; name: string }[]
-    }
+export type MovieType = {
+  id: string;
+  title: string;
+  releaseDate: Date;
+  openingCrawl: string;
+  speciesConnection: { totalCount: number };
+  planetConnection: { totalCount: number };
+  vehicleConnection: { totalCount: number };
+  characterConnection: {
+    characters: { id: string; name: string }[];
+  };
 };

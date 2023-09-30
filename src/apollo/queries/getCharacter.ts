@@ -22,7 +22,7 @@ export const GET_CHARACTER = gql`
   }
 `;
 
-export type GetCharacterType = {
+export type CharacterType = {
   id: string;
   name: string;
   birthYear: Date;

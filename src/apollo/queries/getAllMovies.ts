@@ -14,10 +14,10 @@ export const GET_ALL_MOVIES = gql`
 `;
 
 export type GetAllMoviesType = {
-  films: {
+  // films: {
     id: string;
     title: string;
-    releaseDate: Date;
+    releaseDate: string;
     openingCrawl: string;
-  }[];
+  // }[];
 };
