@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { GetAllMoviesType } from '../apollo/queries/getAllMovies';
+import { GetAllMoviesType } from '../../apollo/queries/getAllMovies';
 
 interface MovieListProps {
   data: GetAllMoviesType[];

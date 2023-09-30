@@ -5,9 +5,6 @@ import {
 import CharacterScreen from '../screens/CharacterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MovieScreen from '../screens/MovieScreen';
-import { ImageBackground, StyleSheet } from 'react-native';
-import { CharacterType } from '../apollo/queries/getCharacter';
-import { MovieType } from '../apollo/queries/getMovie';
 
 type RootStackParamList = {
   Home: undefined;

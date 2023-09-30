@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { MovieType } from '../apollo/queries/getMovie';
+import { View } from 'react-native';
 import { ScreenNavigationProp } from '../navigations/navigation';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_MOVIES } from '../apollo/queries/getAllMovies';
 import type { GetAllMoviesType } from '../apollo/queries/getAllMovies';
-import Loader from '../components/Loader';
-import ErrorMessage from '../components/ErrorMessage';
-import SortByDate from '../components/SortByDate';
-import MovieList from '../components/MovieList';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Loader from '../components/common/Loader';
+import ErrorMessage from '../components/common/ErrorMessage';
+import SortByDate from '../components/homeScreen/SortByDate';
+import MovieList from '../components/homeScreen/MovieList';
 
 const EpisodeTab = ({ navigation }: { navigation: ScreenNavigationProp }) => {
   const { data, loading, error, refetch } = useQuery(GET_ALL_MOVIES);
@@ -59,7 +48,7 @@ const EpisodeTab = ({ navigation }: { navigation: ScreenNavigationProp }) => {
   const goToMovieScreen = (filmId: string) => {
     navigation.navigate('Movie', { filmId });
   };
- 
+
   return (
     <View style={{ flex: 1 }}>
       <SortByDate sortByDate={sortByDate} onClick={toggleSort} />
