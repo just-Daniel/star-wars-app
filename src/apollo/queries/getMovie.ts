@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_MOVIE = gql`
-  query GetMovie ($filmId: !ID) {
-    film(filmID: $filmId) {
+  query GetMovie($filmId: ID!) {
+    film(id: $filmId) {
       id
       title
       releaseDate
@@ -29,7 +29,7 @@ export const GET_MOVIE = gql`
 export type MovieType = {
   id: string;
   title: string;
-  releaseDate: Date;
+  releaseDate: string;
   openingCrawl: string;
   speciesConnection: { totalCount: number };
   planetConnection: { totalCount: number };

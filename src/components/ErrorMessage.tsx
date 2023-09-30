@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface ErrorMessageProps {
-  error: string | null;
+  error: string | null | undefined;
   onRetry?: () => void;
 }
 

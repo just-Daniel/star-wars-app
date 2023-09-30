@@ -1,70 +1,63 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  ImageBackground,
-  Text,
-  Button,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, ScrollView, StyleSheet } from 'react-native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useQuery } from '@apollo/client';
+import { GET_MOVIE, MovieType } from '../apollo/queries/getMovie';
+import Loader from '../components/Loader';
+import ErrorMessage from '../components/ErrorMessage';
+import { ScreenNavigationProp } from '../navigations/navigation';
+import MovieDetailsScreen from '../components/movieScreen/MovieDetailsScreen';
+import MovieCharacterListScreen from '../components/movieScreen/MovieCharacterListScreen';
 
-const MovieScreen = () => {
-  const [value, setValue] = useState('');
-  const inputHandler = (text: string) => setValue(text);
+type RootStackParamList = {
+  Movie: { filmId: string };
+};
+type MovieScreenRouteProp = RouteProp<RootStackParamList, 'Movie'>;
+
+const MovieScreen: React.FC<{ route: MovieScreenRouteProp }> = ({ route }) => {
+  const { filmId } = route.params;
+  const navigation: ScreenNavigationProp = useNavigation();
+  const [movie, setMovie] = useState<MovieType | undefined>();
+  const { data, loading, error, refetch } = useQuery(GET_MOVIE, {
+    variables: { filmId },
+  });
+
+  useEffect(() => {
+    if (!loading) {
+      setMovie(data?.film);
+    }
+  }, [data]);
+
+  if (error) {
+    return <ErrorMessage error={error.message} onRetry={refetch} />;
+  }
+
+  const navigateToCharacterScreen = (personId: string) => {
+    navigation.navigate('Character', { personId });
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.form}>
-        <Text>MovieScreen</Text>
-        <TouchableOpacity activeOpacity={0.8} style={styles.btn}>
-          <Text style={styles.btnTitle}>SIGN IN</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <ScrollView style={styles.container}>
+      {loading && <Loader />}
+
+      <MovieDetailsScreen movie={movie} />
+      <Text style={styles.heading}>Characters:</Text>
+      <MovieCharacterListScreen
+        characters={movie?.characterConnection.characters}
+        onCharacterPress={navigateToCharacterScreen}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    padding: 16,
   },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#f0f8ff',
-
-    borderRadius: 5,
-    height: 40,
-  },
-  inputTitle: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: '700',
-    marginBottom: 5,
-  },
-  form: {
-    marginHorizontal: 40,
-  },
-  btn: {
-    marginTop: 40,
-    backgroundColor: '#ffb6c1',
-    height: 40,
-    borderRadius: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 20,
-  },
-  btnTitle: {
-    color: '#f0f8ff',
-    fontSize: 17,
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
   },
 });
 
