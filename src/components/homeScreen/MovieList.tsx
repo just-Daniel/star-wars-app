@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  Text,
   FlatList,
-  TouchableOpacity,
   StyleSheet,
-  View,
 } from 'react-native';
 import { GetAllMoviesType } from '../../apollo/queries/getAllMovies';
+import MovieShortInfo from '../common/MovieShortInfo';
 
 interface MovieListProps {
   data: GetAllMoviesType[];
@@ -15,18 +13,14 @@ interface MovieListProps {
 
 const MovieList: React.FC<MovieListProps> = ({ data, onItemClick }) => {
   const renderItem = ({ item }: { item: GetAllMoviesType }) => (
-    <TouchableOpacity
-      onPress={() => onItemClick(item.id)}
-      style={styles.itemContainer}
-      activeOpacity={0.8}
-    >
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.releaseDate}>{item.releaseDate}</Text>
-      <Text style={styles.openingCrawl}>
-        {item.openingCrawl.slice(0, 50)}
-        {item.openingCrawl.length > 50 ? '...' : ''}
-      </Text>
-    </TouchableOpacity>
+    <MovieShortInfo
+      onItemClick={() => onItemClick(item.id)}
+      title={item.title}
+      releaseDate={item.releaseDate}
+      openingCrawl={item.openingCrawl}
+      id={item.id + item.title.length}
+      key={item.id}
+    />
   );
 
   return (

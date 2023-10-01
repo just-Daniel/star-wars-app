@@ -16,6 +16,8 @@ export const GET_CHARACTER = gql`
         films {
           id
           title
+          releaseDate
+          openingCrawl
         }
       }
     }
@@ -36,6 +38,8 @@ export type CharacterType = {
     films: {
       id: string;
       title: string;
+      releaseDate: string;
+      openingCrawl: string;
     }[];
   };
 };

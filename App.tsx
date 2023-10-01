@@ -4,17 +4,16 @@ import { StyleSheet } from 'react-native';
 import Navigation from './src/navigations/navigation';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './src/apollo/apollo';
+import { LikedCharactersProvider } from './src/context/LikedCharactersContext';
 
 export default function App() {
   return (
     <ApolloProvider client={client}>
-    <NavigationContainer>
-      {/* <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View> */}
-      <Navigation />
-    </NavigationContainer>
+      <LikedCharactersProvider>
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
+      </LikedCharactersProvider>
     </ApolloProvider>
   );
 }
