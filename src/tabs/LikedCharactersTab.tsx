@@ -1,9 +1,17 @@
 import { ScreenNavigationProp } from '../navigations/navigation';
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { useLikedCharactersContext } from '../context/LikedCharactersContext'; // Import the context
 
-const LikedCharactersTab: React.FC<{ navigation: ScreenNavigationProp }> = ({navigation}) => {
+const LikedCharactersTab: React.FC<{ navigation: ScreenNavigationProp }> = ({
+  navigation,
+}) => {
   const { likedCharacters } = useLikedCharactersContext();
 
   const navigateToCharacterScreen = (personId: string) => {
@@ -12,25 +20,27 @@ const LikedCharactersTab: React.FC<{ navigation: ScreenNavigationProp }> = ({nav
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={likedCharacters}
-        keyExtractor={(character) => character.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity 
-          style={styles.characterItem}
-          activeOpacity={0.8}
-          onPress={() => navigateToCharacterScreen(item.id)}
-          >
-            <Text style={styles.characterName}>{item.name}</Text>
-            <Text style={styles.characterTitleMovies}>Movies:</Text>
-              {
-                item.filmConnection.films.map(i => (
+      {likedCharacters.length !== 0 ? (
+        <FlatList
+          data={likedCharacters}
+          keyExtractor={(character) => character.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.characterItem}
+              activeOpacity={0.8}
+              onPress={() => navigateToCharacterScreen(item.id)}
+            >
+              <Text style={styles.characterName}>{item.name}</Text>
+              <Text style={styles.characterTitleMovies}>Movies:</Text>
+              {item.filmConnection.films.map((i) => (
                 <Text key={i.id}> - {i.title}</Text>
-                ))
-              }
-          </TouchableOpacity>
-        )}
-      />
+              ))}
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        <Text style={styles.noCharacters}>No liked characters yet.</Text>
+      )}
     </View>
   );
 };
@@ -39,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
   },
   title: {
     fontSize: 24,
@@ -47,7 +57,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   characterItem: {
-    backgroundColor: '#cbf7dc', 
+    backgroundColor: '#cbf7dc',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
@@ -63,7 +73,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333333',
-  }
+  },
+  noCharacters: {
+    fontSize: 16,
+    color: '#666666',
+  },
 });
 
 export default LikedCharactersTab;

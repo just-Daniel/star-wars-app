@@ -18,8 +18,6 @@ export const LikedCharactersProvider: React.FC<{ children: ReactNode }> = ({
   const [likedCharacters, setLikedCharacters] = useState<CharacterType[]>([]);
 
   const likeCharacter = (character: CharacterType) => {
-    console.log('INNER DATA', character);
-
     const checkExistLike = likedCharacters.some((lc) => lc.id === character.id);
 
     if (!checkExistLike) {
@@ -28,8 +26,6 @@ export const LikedCharactersProvider: React.FC<{ children: ReactNode }> = ({
         character,
       ]);
     }
-
-    console.log('FINISH ADD', likedCharacters);
   };
 
   const unlikeCharacter = (character: CharacterType) => {

@@ -33,7 +33,6 @@ const CharacterScreen: React.FC<{
   const { likedCharacters, likeCharacter, unlikeCharacter } =
     useLikedCharactersContext();
   const [liked, setLiked] = useState(false);
-  console.log(character);
 
   useEffect(() => {
     if (!loading) {
